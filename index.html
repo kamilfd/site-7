@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOPLAY GAMES S.L. | Custom Computer Programming & System Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables - Modern Tech & Code Theme */
+        :root {
+            --bg-dark: #0B0F19;
+            --bg-panel: #131B2F;
+            --bg-lighter: #1E293B;
+            --accent-blue: #38BDF8;
+            --accent-indigo: #818CF8;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-color: rgba(56, 189, 248, 0.15);
+            --border-radius-lg: 12px;
+            --border-radius-sm: 6px;
+            --max-width: 1200px;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        /* Basic Resets & Typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--text-main);
+            background-color: var(--bg-dark);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(129, 140, 248, 0.03) 0%, transparent 40%);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* Utility Classes */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-padding {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.75rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-indigo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .title-wrapper {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* Header Navigation */
+        .navbar {
+            background-color: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 1px;
+        }
+
+        .logo-icon {
+            color: var(--accent-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* 1. Main Screen (Hero Section) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+            position: relative;
+            background: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="1" fill="rgba(56,189,248,0.1)"/></svg>');
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 45px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 16px 36px;
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            border-radius: var(--border-radius-sm);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            animation: fadeInDown 1s ease-out 0.4s both;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--text-main);
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+        }
+
+        /* 2. About Us */
+        .about-section {
+            background-color: var(--bg-panel);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .about-content {
+            background: var(--bg-lighter);
+            padding: 60px;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+            font-size: 1.15rem;
+            line-height: 1.85;
+            color: var(--text-main);
+            text-align: justify;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-indigo));
+        }
+
+        /* 3. Services (3 items, 3 sentences each) */
+        .services-section {
+            background-color: var(--bg-dark);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--bg-panel);
+            padding: 45px 35px;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* 4. Advantages */
+        .advantages-section {
+            background-color: var(--bg-panel);
+            position: relative;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .advantage-item {
+            text-align: left;
+        }
+
+        .adv-icon {
+            color: var(--accent-indigo);
+            margin-bottom: 20px;
+        }
+
+        .advantage-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .advantage-item p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* 5. Process */
+        .process-section {
+            background-color: var(--bg-dark);
+        }
+
+        .process-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-container::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+
+        .process-step {
+            width: 30%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-lighter);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(11, 15, 25, 1);
+        }
+
+        .process-step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* 6. Contact Form & 7. Contacts */
+        .contact-section {
+            background-color: var(--bg-panel);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            background: var(--bg-lighter);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .form-wrapper {
+            padding: 60px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        .form-group textarea {
+            height: 140px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--accent-blue);
+            color: var(--bg-dark);
+            border: none;
+            padding: 16px 32px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: var(--text-main);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .info-wrapper {
+            background: var(--bg-dark);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .info-wrapper h3 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--text-main);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .info-item svg {
+            color: var(--accent-indigo);
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-text h4 {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .info-text p, .info-text a {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .info-text a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #060913;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3.5rem; }
+            .process-container::before { display: none; }
+            .process-container { flex-direction: column; gap: 40px; align-items: center; }
+            .process-step { width: 100%; max-width: 350px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .info-wrapper { border-left: none; border-top: 1px solid var(--border-color); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .section-padding { padding: 80px 0; }
+            .section-title { font-size: 2.25rem; }
+            .about-content { padding: 40px 24px; }
+            .form-wrapper, .info-wrapper { padding: 40px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                TOPLAY GAMES
+            </a>
+            <nav class="nav-links">
+                <a href="#about">Corporate Profile</a>
+                <a href="#services">System Design</a>
+                <a href="#advantages">Technical Edge</a>
+                <a href="#process">Development</a>
+                <a href="#contact">Initialize Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 1. Главный Экран (Main Screen) -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <span class="hero-tag">Professional Scientific & Technical Services</span>
+            <h1>Engineering the Future of Digital Interactions</h1>
+            <p>TOPLAY GAMES S.L. delivers elite custom computer programming and advanced system design services tailored to scale modern enterprises.</p>
+            <a href="#contact" class="btn-primary">Execute Project Request</a>
+        </div>
+    </section>
+
+    <!-- 2. Про нас (About Us - Exactly 6 sentences) -->
+    <section class="section-padding about-section" id="about">
+        <div class="container">
+            <div class="title-wrapper">
+                <h2 class="section-title">Our Technical Foundation</h2>
+                <p class="section-subtitle">Architecting high-performance digital environments.</p>
+            </div>
+            <div class="about-content">
+                Located in the vibrant technological hub of Barcelona, TOPLAY GAMES S.L. is a premier provider of custom computer programming and system design services. Under the strategic direction of Eric Orias Rodriguez, our firm specializes in architecting robust digital solutions that solve complex professional challenges. We combine deep scientific expertise with cutting-edge technical practices to deliver software that scales seamlessly with your business. Our dedicated team of developers and engineers works passionately to transform abstract concepts into highly functional, user-centric applications. By maintaining a rigorous commitment to quality and innovation, we consistently exceed the expectations of our diverse corporate clientele. Ultimately, our mission is to empower organizations globally through flawless code and visionary technical infrastructure.
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Сервисы (Services - Exactly 3 blocks, 3 sentences each) -->
+    <section class="section-padding services-section" id="services">
+        <div class="container">
+            <div class="title-wrapper">
+                <h2 class="section-title">Core Development Solutions</h2>
+                <p class="section-subtitle">Precision-engineered programming and consulting tailored for your enterprise.</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <h3>Custom Software Engineering</h3>
+                    <p>We design and develop bespoke software applications that align perfectly with your unique operational requirements. Our engineering team utilizes the latest programming languages and frameworks to build secure, high-performance systems from the ground up. Every line of code is meticulously tested to ensure maximum reliability and seamless integration into your existing technical environment.</p>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    </div>
+                    <h3>Systems Architecture Design</h3>
+                    <p>Building a scalable digital foundation requires expert planning and sophisticated computer systems design. We evaluate your current technical infrastructure to architect comprehensive solutions that enhance data flow and processing efficiency. Our strategic blueprints ensure that your enterprise remains agile and fully prepared for future technological advancements.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </div>
+                    <h3>Technical Consulting Services</h3>
+                    <p>Navigating the complexities of modern software development can be challenging without the right professional guidance. We offer specialized scientific and technical consulting to help you make informed decisions regarding your IT investments. From feasibility studies to technology stack optimization, our experts provide actionable insights that drive sustainable business growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Преимущества работы с нами (Why Choose Us) -->
+    <section class="section-padding advantages-section" id="advantages">
+        <div class="container">
+            <div class="title-wrapper">
+                <h2 class="section-title">The TOPLAY Advantage</h2>
+                <p class="section-subtitle">Why industry leaders trust us for their complex computing needs.</p>
+            </div>
+            
+            <div class="advantages-grid">
+                <!-- Advantage 1 -->
+                <div class="advantage-item">
+                    <svg class="adv-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <h3>Uncompromising Code Quality</h3>
+                    <p>Our developers adhere to strict coding standards, ensuring that the software we deliver is highly secure, maintainable, and built to perform under extreme computational loads.</p>
+                </div>
+                
+                <!-- Advantage 2 -->
+                <div class="advantage-item">
+                    <svg class="adv-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                    <h3>European Tech Hub Expertise</h3>
+                    <p>Headquartered in Barcelona, we leverage the talent and innovative spirit of one of Europe's leading technological capitals to deliver world-class digital solutions.</p>
+                </div>
+
+                <!-- Advantage 3 -->
+                <div class="advantage-item">
+                    <svg class="adv-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                    <h3>Scientific Analytical Approach</h3>
+                    <p>We treat software engineering as an exact science, utilizing rigorous data analysis and methodical testing to eliminate variables and guarantee deployment success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Какая процедура работы (Our Process) -->
+    <section class="section-padding process-section" id="process">
+        <div class="container">
+            <div class="title-wrapper">
+                <h2 class="section-title">Development Lifecycle</h2>
+                <p class="section-subtitle">A streamlined, agile methodology for deploying sophisticated systems.</p>
+            </div>
+            
+            <div class="process-container">
+                <!-- Step 1 -->
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Technical Discovery</h3>
+                    <p>We perform an in-depth analysis of your business logic, technical constraints, and system requirements to draft a precise architectural blueprint.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Agile Engineering</h3>
+                    <p>Our programming teams execute the build through iterative sprints, maintaining transparent communication while developing robust core functionalities.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Deployment & Scaling</h3>
+                    <p>Following rigorous QA protocols, we launch your custom software into the production environment and monitor system performance for optimal scaling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6 & 7. Контактная форма и Контакты (Contact Section) -->
+    <section class="section-padding contact-section" id="contact">
+        <div class="container">
+            <div class="title-wrapper">
+                <h2 class="section-title">Initiate a Protocol</h2>
+                <p class="section-subtitle">Contact our development experts to discuss your upcoming custom programming or systems design requirements.</p>
+            </div>
+            
+            <div class="contact-grid">
+                <!-- Contact Form (Block 6) -->
+                <div class="form-wrapper">
+                    <form action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">Entity / Contact Name</label>
+                            <input type="text" id="name" name="name" placeholder="e.g., Jane Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Secure Email Node</label>
+                            <input type="email" id="email" name="email" placeholder="e.g., contact@yourdomain.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">System Requirements</label>
+                            <textarea id="message" name="message" placeholder="Please outline the technical parameters of your inquiry..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Compile & Send</button>
+                    </form>
+                </div>
+
+                <!-- Contacts Info (Block 7) -->
+                <div class="info-wrapper">
+                    <h3>Server Coordinates</h3>
+                    
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <div class="info-text">
+                            <h4>Physical Node</h4>
+                            <p>CALLE MARINA 291, P. 2 PTA. 3<br>08025, BARCELONA<br>Barcelona, Spain</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <div class="info-text">
+                            <h4>Email Communications</h4>
+                            <a href="mailto:info@toplaygames.org">info@toplaygames.org</a>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <div class="info-text">
+                            <h4>Administrative Principal</h4>
+                            <p>TOPLAY GAMES S.L.<br>Key Principal: ORIAS RODRIGUEZ, ERIC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 TOPLAY GAMES S.L. All rights reserved. Professional Scientific and Technical Services.</p>
+        </div>
+    </footer>
+
+    <!-- Smooth Scrolling -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
